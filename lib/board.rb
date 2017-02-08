@@ -21,7 +21,10 @@ class Board < Array
 	end
 
 	def winner
-		scan_h || scan_v || scan_d
+		scan_h ||
+		scan_v ||
+		scan_d_r ||
+		scan_d_l
 	end
 
 	def scan_h
@@ -58,8 +61,42 @@ class Board < Array
 		nil
 	end
 
-	def scan_d
-		
+	def scan_d_r
+		4.times do |column|
+			3.times do |row|
+				prev = self[column][row]
+				count = 0
+				4.times do |n|
+					if self[column + n][row + n] == prev && !prev.nil?
+						count += 1
+						return prev if count == 4
+					else
+						break
+					end
+				end
+			end
+
+		end
+		nil
+	end
+
+	def scan_d_l
+		4.times do |column|
+			(3..5).each do |row|
+				prev = self[column][row]
+				count = 0
+				4.times do |n|
+					if self[column + n][row - n] == prev && !prev.nil?
+						count += 1
+						return prev if count == 4
+					else
+						break
+					end
+				end
+			end
+
+		end
+		nil
 	end
 
 end

@@ -87,11 +87,21 @@ describe Board do
 					expect(subject.winner).to eq :disc
 				end
 			end
-			context "diagonal winning condition" do
+			context "diagonal winning condition (right)" do
 				it "returns the disc of the winning player" do
 					4.times do |n|
 						(n + 1).times do |m|
-							n == m ? subject.drop(n, :red) : subject.drop(n, :disc)
+							n == m ? subject.drop(n, :disc) : subject.drop(n, :red)
+						end
+					end
+					expect(subject.winner).to eq :disc
+				end
+			end
+			context "diagonal winning condition (left)" do
+				it "returns the disc of the winning player" do
+					3.downto(0) do |n|
+						(n + 1).times do |m|
+							n == m ? subject.drop(m, :disc) : subject.drop(m, :red)
 						end
 					end
 					expect(subject.winner).to eq :disc
