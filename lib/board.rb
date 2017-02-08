@@ -4,11 +4,11 @@ class Board < Array
 	end
 
 	def empty?
-		self.all? { |column| column.empty? }
+		all? { |column| column.empty? }
 	end
 
 	def full?
-		self.all? { |column| column.size == 6 }
+		all? { |column| column.size == 6 }
 	end
 
 	def drop(column, disc)
