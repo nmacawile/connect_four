@@ -52,13 +52,13 @@ class Board < Array
 		straight(7, 6) { |row, column| self[column][row] }
 	end
 
-	def scan_d_r
+	def scan_d(range)
 		4.times do |column|
-			3.times do |row|
+			range.each do |row|
 				prev = self[column][row]
 				count = 0
 				4.times do |n|
-					if self[column + n][row + n] == prev && !prev.nil?
+					if self[column + n][yield(row, n)] == prev && !prev.nil?
 						count += 1
 						return prev if count == 4
 					else
@@ -69,25 +69,13 @@ class Board < Array
 
 		end
 		nil
+	end
+
+	def scan_d_r
+		scan_d(0..2) { |row, n| row + n }
 	end
 
 	def scan_d_l
-		4.times do |column|
-			(3..5).each do |row|
-				prev = self[column][row]
-				count = 0
-				4.times do |n|
-					if self[column + n][row - n] == prev && !prev.nil?
-						count += 1
-						return prev if count == 4
-					else
-						break
-					end
-				end
-			end
-
-		end
-		nil
+		scan_d(3..5) { |row, n| row - n }
 	end
-
 end
