@@ -27,16 +27,16 @@ class Board < Array
 		scan_d_l
 	end
 
-	def scan_h
-		6.times do |row|
+	def straight(outer, inner)
+		outer.times do |y|
 			prev = nil
 			count = 0
-			7.times do |column|
-				if self[column][row] == prev
+			inner.times do |x|
+				if yield(x, y) == prev
 					count += 1
 					return prev if !prev.nil? && count == 4
 				else
-					prev = self[column][row]
+					prev = yield(x, y)
 					count = 1
 				end
 			end
@@ -44,21 +44,12 @@ class Board < Array
 		nil
 	end
 
+	def scan_h
+		straight(6, 7) { |column, row| self[column][row] }
+	end
+
 	def scan_v
-		7.times do |column|
-			prev = nil
-			count = 0
-			6.times do |row|
-				if self[column][row] == prev
-					count += 1
-					return prev if !prev.nil? && count == 4
-				else
-					prev = self[column][row]
-					count = 1
-				end
-			end
-		end
-		nil
+		straight(7, 6) { |row, column| self[column][row] }
 	end
 
 	def scan_d_r

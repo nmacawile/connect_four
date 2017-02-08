@@ -78,13 +78,13 @@ describe Board do
 			context "vertical winning condition" do
 				it "returns the disc of the winning player" do
 					4.times { subject.drop(0, :disc) }
-					expect(subject.winner).to eq :disc
+					expect(subject.scan_v).to eq :disc
 				end
 			end
 			context "horizontal winning condition" do
 				it "returns the disc of the winning player" do
 					4.times { |column| subject.drop(column, :disc) }
-					expect(subject.winner).to eq :disc
+					expect(subject.scan_h).to eq :disc
 				end
 			end
 			context "diagonal winning condition (right)" do
@@ -94,7 +94,7 @@ describe Board do
 							n == m ? subject.drop(n, :disc) : subject.drop(n, :red)
 						end
 					end
-					expect(subject.winner).to eq :disc
+					expect(subject.scan_d_r).to eq :disc
 				end
 			end
 			context "diagonal winning condition (left)" do
@@ -104,7 +104,7 @@ describe Board do
 							n == m ? subject.drop(m, :disc) : subject.drop(m, :red)
 						end
 					end
-					expect(subject.winner).to eq :disc
+					expect(subject.scan_d_l).to eq :disc
 				end
 			end
 		end
