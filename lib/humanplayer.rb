@@ -1,3 +1,5 @@
+require_relative 'player'
+
 class HumanPlayer < Player
 	def turn
 		input = gets.to_i
