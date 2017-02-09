@@ -12,6 +12,7 @@ class Board < Array
 	end
 
 	def drop(column, disc)
+		return false unless column.between?(0, 6)
 		if self[column].size < 6
 			self[column] << disc
 			true
@@ -52,7 +53,7 @@ class Board < Array
 		straight(7, 6) { |row, column| self[column][row] }
 	end
 
-	def scan_d(range)
+	def diagonal(range)
 		4.times do |column|
 			range.each do |row|
 				prev = self[column][row]
@@ -72,10 +73,10 @@ class Board < Array
 	end
 
 	def scan_d_r
-		scan_d(0..2) { |row, n| row + n }
+		diagonal(0..2) { |row, n| row + n }
 	end
 
 	def scan_d_l
-		scan_d(3..5) { |row, n| row - n }
+		diagonal(3..5) { |row, n| row - n }
 	end
 end

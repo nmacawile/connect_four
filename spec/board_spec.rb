@@ -11,6 +11,16 @@ describe Board do
 	end
 
 	describe "#drop(column, disc)" do
+		context "when column index is invalid" do
+			it "doesn't drop a disc into any column" do
+				expect { subject.drop(7, :disc) }.not_to change { subject }
+			end
+
+			it "returns false" do
+				expect(subject.drop(7, :disc)).to be false 
+			end
+		end
+
 		context "when column is full" do
 			before do
 				3.times do 
