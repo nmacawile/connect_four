@@ -5,6 +5,8 @@ describe Game do
 
 	before do
 		allow(subject).to receive(:puts)
+		allow(subject).to receive(:print)
+		allow(subject.current_player).to receive(:print)
 	end
 
 	describe "#new" do
@@ -28,12 +30,36 @@ describe Game do
 	end
 
 	describe "#turn" do
-		it "lets the player with the turn to drop a disc into the board" do
-			allow(subject).to receive(:loop).and_yield
-			allow(subject.current_player).to receive_message_chain(:gets, :to_i).and_return(5)
-			subject.turn
-			expect(subject.board[5].last).to eq subject.current_player.disc
-			expect(subject.board[5].size).to eq 1
+		context "with a valid column index" do
+			it "lets the player with the turn to drop a disc into the board" do
+				allow(subject).to receive(:loop).and_yield
+				allow(subject.current_player).to receive_message_chain(:gets, :to_i).and_return(5)
+				subject.turn
+				expect(subject.board[4].last).to eq subject.current_player.disc
+				expect(subject.board[4].size).to eq 1
+			end
+		end
+		context "with an invalid column index" do
+			it "doesn't drop a disc into the board" do
+				allow(subject).to receive(:loop).and_yield
+				allow(subject.current_player).to receive_message_chain(:gets, :to_i).and_return(15)
+				expect { subject.turn }.not_to change { subject.board }
+			end
+		end
+	end
+
+	describe "#switch" do
+		it "switches to the other player" do
+			subject.switch
+			expect(subject.current_player).to be subject.players[1]
+		end
+	end
+
+	describe "#switch_first_turn" do
+		it "gives the other player the first turn" do
+			subject.switch_first_turn
+			expect(subject.first_turn).to eq 1
+			expect(subject.current_player).to be subject.players[1]
 		end
 	end
 

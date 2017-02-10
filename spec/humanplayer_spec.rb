@@ -18,15 +18,15 @@ describe HumanPlayer do
 	describe "#turn" do
 		context "when column index is valid" do
 			it "drops a disc in the selected column" do
-				allow(subject).to receive_message_chain(:gets, :to_i).and_return(5)
+				allow(subject).to receive_message_chain(:gets, :to_i).and_return(7)
 				expect(subject.turn).to be true
-				expect(@board[5].last).to eq :red
+				expect(@board[6].last).to eq :red
 			end
 		end
 
 		context "when column index is invalid" do
 			it "drops a disc in the selected column" do
-				allow(subject).to receive_message_chain(:gets, :to_i).and_return(7)
+				allow(subject).to receive_message_chain(:gets, :to_i).and_return(8)
 				expect(subject.turn).to be false
 			end
 		end
