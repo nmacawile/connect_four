@@ -14,7 +14,5 @@ class ComputerPlayer < Player
 			puts "#{name}'s turn: #{move + 1}"
 			game.board.drop(move, disc)
 		end
-
-		#validmoves.empty? ? false : game.board.drop(validmoves.sample, disc)
 	end
 end
